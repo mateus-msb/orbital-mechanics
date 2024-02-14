@@ -4,6 +4,13 @@ from typing import Literal
 
 class Orbit():
     def __init__(self):
+        """
+        This classes main purpose is to:
+        - Initialize the orbit, converting to ECI if necessary;
+        - Storage the initial orbit;
+        - Register the perturbation to be considered.
+        """
+        
         # Central body definition
         # Earth as default
         self.R  = 6_378     # km
@@ -20,13 +27,17 @@ class Orbit():
 
     def change_central_body(self,new_central_body: CentralBody):
         solar_system_data = get_solar_system_data()
-        
         self.R  = solar_system_data[new_central_body]["R"]
         self.mu = solar_system_data[new_central_body]["mu"]
+        
         print(f"New central body: {new_central_body}") 
         print(f"Radius {self.R} km")
         print(f"Gravitational Parameter {self.mu} km3/s2")
+        
         self.initialize()
+
+        return self.R, self.mu
+
 
     def get_central_body(self):
         """
@@ -38,11 +49,11 @@ class Orbit():
     def activate_perturbation(self,perturbation: Literal["Drag","J2"]):
         if "Drag" in perturbation:
             self.Drag = True
-            print("Using atmospheric drag.")
+            print("Using atmospheric drag (Standard 1976).")
 
         if "J2" in perturbation:
-            self.J2 = True
-            print("Using Earth Oblateness J2")
+            self.J2 = 1.08263e-3
+            print("Using Earth's Oblateness J2.")
         
     def deactivate_perturbation(self,perturbation: Literal["Drag","J2"]):
             if "Drag" in perturbation:
@@ -51,7 +62,7 @@ class Orbit():
 
             if "J2" in perturbation:
                 self.J2 = False
-                print("Not using Earth Oblateness J2")
+                print("Not using Earth's Oblateness J2")
 
 class OrbitElements(Orbit):
     def __init__(self,a,e,i,w,RA,TA):
@@ -78,11 +89,6 @@ class OrbitElements(Orbit):
         Convert the classical elements to
         the state vector:
         X = [x,y,z,vx,vy,vz]
-
-        Can be initialized in the following arrangements:
-        x,y,z,vx,vy,vz
-        [x,y,z],[vx,vy,vz]
-        [x,y,z,vx,vy,vz]
         """
         h = np.sqrt(self.mu * self.a * np.absolute(1 - self.e**2))
 
@@ -116,6 +122,11 @@ class OrbitStateVector(Orbit):
         """
         State Vector:
         X = [x,y,z,vx,vy,vz]
+        
+        Can be initialized in the following arrangements:
+        x,y,z,vx,vy,vz
+        [x,y,z],[vx,vy,vz]
+        [x,y,z,vx,vy,vz]
         """
         super().__init__()
         if len(args) == 6:
@@ -132,7 +143,7 @@ class OrbitStateVector(Orbit):
 
 
 if __name__ == "__main__":
-    # Problem 4.4 from Curtis 3rd Edition
+    # Curtis - Problem 4.4
     a  = 25384
     e  = 1.298
     i  = 90
