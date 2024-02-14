@@ -4,8 +4,15 @@
 This repository aims to analyze the performance and numerical precision of an orbit propagator, incorporating simple perturbations (Atmospheric Drag and J2), while also facilitating the implementation of control laws in Python and Julia.
 
 ## Next Steps (14.02)
+### General
+- [ ] Document functions
+- [ ] Document classes
+- [ ] Cite references to each function
+- [ ] Cite references to each equation
+
+
 ### Python 
-- [ ] Implement J2 PErturbation
+- [x] Implement J2 PErturbation (14.02)
 - [ ] Implement multiple satellites
 - [ ] Insert control law
 - [ ] Input from .txt file
