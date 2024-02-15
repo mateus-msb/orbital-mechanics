@@ -3,19 +3,19 @@ import orbit
 import numpy as np
 
 class Satellite():
-    def __init__(self, orbit:Orbit, mass:float=100, cd:float =2.2, area:float=1):
+    def __init__(self, orbit:Orbit, name:str="",mass:float=100, cd:float=2.2, area:float=1):
         self.orbit= orbit
+        self.name = name
         self.mass = mass
         self.cd   = cd
         self.area = area
         self.X=[];self.Y=[];self.Z=[]
         self.Vx=[];self.Vy=[];self.Vz=[]
 
+    def get_orbit(self):
+        return self.orbit
+
     def save_state(self,solution:np.ndarray):
-        if self.X is None:
-            self.X=[];self.Y=[];self.Z=[]
-            self.Vx=[];self.Vy=[];self.Vz=[]    
-    
         X  = solution[0]
         Y  = solution[1]
         Z  = solution[2]
