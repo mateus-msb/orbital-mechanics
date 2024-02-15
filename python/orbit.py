@@ -25,6 +25,9 @@ class Orbit():
     def initialize(self):
         raise NotImplementedError(f"initialize() not implemented in {self.__class__.__name__}")
 
+    def get_initial_state(self):
+        raise NotImplementedError(f"get_inicital_state() not implemented in {self.__class__.__name__}")
+
     def change_central_body(self,new_central_body: CentralBody):
         solar_system_data = get_solar_system_data()
         self.R  = solar_system_data[new_central_body]["R"]
@@ -116,6 +119,8 @@ class OrbitElements(Orbit):
         print(f"Velocity: {v_ECI}\n")
         print(f"State Vector: {self.initial_state}\n")
 
+    def get_initial_state(self):
+        return self.initial_state
 
 class OrbitStateVector(Orbit):
     def __init__(self,*args):
@@ -141,6 +146,8 @@ class OrbitStateVector(Orbit):
     def initialize(self):
         pass
 
+    def get_initial_state(self):
+        return self.initial_state
 
 if __name__ == "__main__":
     # Curtis - Problem 4.4
