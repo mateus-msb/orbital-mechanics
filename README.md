@@ -12,8 +12,10 @@ This repository aims to analyze the performance and numerical precision of an or
 
 
 ### Python 
-- [x] Implement J2 PErturbation (14.02)
-- [ ] Implement multiple satellites
+- [x] Implement J2 Perturbation (14.02)
+- [x] Implement multiple satellites (14.02)
+- [x] Fix multiple satellites plots (14.02)
+- [x] Implement error plot (15.02)
 - [ ] Insert control law
 - [ ] Input from .txt file
 - [ ] Output to results/
