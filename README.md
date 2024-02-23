@@ -16,6 +16,8 @@ This repository aims to analyze the performance and numerical precision of an or
 - [x] Implement multiple satellites (14.02)
 - [x] Fix multiple satellites plots (14.02)
 - [x] Implement error plot (15.02)
+- [x] Implement relative orbits
+- [ ] Implement time axis in plots
 - [ ] Insert control law
 - [ ] Input from .txt file
 - [ ] Output to results/
