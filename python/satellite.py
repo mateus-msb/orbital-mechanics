@@ -33,6 +33,15 @@ class Satellite():
     def get_state(self):
         return [self.X,self.Y,self.Z,self.Vx,self.Vy,self.Vz]
 
+    def unpack_position(self):
+        # Unpack positions
+        X,Y,Z,*rest = self.get_state()
+        return X,Y,Z
+
+    def unpack_velocity(self):
+        # Unpack positions
+        X,Y,Z,Vx,Vy,Vz = self.get_state()
+        return Vx,Vy,Vz
 
 if __name__ == "__main__":
     r0 = [-2384.46, 5729.01, 3050.46]
