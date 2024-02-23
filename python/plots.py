@@ -8,7 +8,7 @@ def plot_position(satellites:List[Satellite], times:np.ndarray):
     for idx,sat in enumerate(satellites):
         fig,axs = plt.subplots(3,sharex=True,sharey=True)
         
-        X,Y,Z = unpack_position(sat)
+        X,Y,Z = sat.unpack_position()
 
         if sat.name:
             fig.suptitle(f"Position of satellite {sat.name}")
@@ -29,7 +29,7 @@ def plot_position(satellites:List[Satellite], times:np.ndarray):
 
 
 def plot_altitude(sat:Satellite, times:np.ndarray, R: float):
-    X,Y,Z = unpack_position(sat)
+    X,Y,Z = sat.unpack_position()
 
     plt.figure(2)
     plt.title("Altitude")
@@ -45,7 +45,7 @@ def plot3d(satellites:List[Satellite], times:np.ndarray):
     tri.suptitle("Position 3D")
 
     for idx,sat in enumerate(satellites):    
-        X,Y,Z = unpack_position(sat)
+        X,Y,Z = sat.unpack_position()
         limits = get_max_limits(X,Y,Z)
 
         if sat.name:
@@ -62,12 +62,12 @@ def plot3d(satellites:List[Satellite], times:np.ndarray):
 
 def plot_error(satellites:List[Satellite], times:np.ndarray):
     sat_leader = satellites[0]
-    X0,Y0,Z0 = unpack_position(sat_leader)
+    X0,Y0,Z0 = sat_leader.unpack_position()
 
     # Plot graphics and return coordinates in ECI frame
     for idx,sat in enumerate(satellites[1:]):
         fig,axs = plt.subplots(3,sharex=True,sharey=True)
-        X,Y,Z = unpack_position(sat)
+        X,Y,Z = sat.unpack_position()
 
         if sat.name:
             fig.suptitle(f"Error position of satellite {sat.name}")
@@ -96,16 +96,6 @@ def plot_error(satellites:List[Satellite], times:np.ndarray):
             ax.plot(X_error,Y_error,Z_error, label=f"Satellite {idx}")
 
         plt.show()
-
-def unpack_position(sat: Satellite):
-    # Unpack positions
-    X,Y,Z,*rest = sat.get_state()
-    return X,Y,Z
-
-def unpack_velocity(sat: Satellite):
-    # Unpack positions
-    X,Y,Z,Vx,Vy,Vz = sat.get_state()
-    return Vx,Vy,Vz
 
 def get_max_limits(X:float,Y:float,Z:float):
     limit = max(max(X),max(Y),max(Z))
